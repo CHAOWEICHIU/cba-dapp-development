@@ -1,0 +1,28 @@
+{
+  "name": "02_dapp_dev_tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.25",
+    "truffle": "^5.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "migrate": "truffle migrate --network development",
+    "migrate:reset": "truffle migrate --network development --reset",
+    "complie": "truffle complie",
+    "dev": "webpack-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

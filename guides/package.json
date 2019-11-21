@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.0.25",
-    "web3": "^1.2.4"
+    "@truffle/hdwallet-provider": "1.0.25",
+    "ethereumjs-tx": "^2.1.1",
+    "web3": "1.2.4"
   }
 }

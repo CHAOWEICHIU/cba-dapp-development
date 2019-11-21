@@ -14,7 +14,7 @@ web3.eth.sendTransaction(
     value: web3.utils.toWei("1", "ether")
   },
   (err, transaction) => {
-    console.log("err", transaction);
+    console.log(transaction);
   }
 );
 

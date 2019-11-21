@@ -6,7 +6,7 @@
   "scripts": {
     "build:webapp": "webpack --progress --mode production",
     "migrate": "truffle migrate --network=development --reset",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --host 0.0.0.0 --port 8080 --disableHostCheck"
   },
   "author": "",
   "license": "ISC",

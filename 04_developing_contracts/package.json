@@ -1,0 +1,24 @@
+{
+  "name": "04_developing_contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.4.0",
+    "@truffle/hdwallet-provider": "^1.0.25",
+    "truffle": "^5.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "truffle test",
+    "migrate": "truffle migrate --network development",
+    "migrate:reset": "truffle migrate --network development --reset",
+    "complie": "truffle complie"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ipfs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --host 0.0.0.0 --port 8080 --disableHostCheck"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "ipfs-http-client": "^39.0.2",
+    "pull-file-reader": "^1.0.2",
+    "webpack-dev-server": "^3.9.0"
+  }
+}

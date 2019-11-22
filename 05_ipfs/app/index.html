@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Lato", "PingFangTC", "Arial", "Heiti TC",
+          "Microsoft Jhenghei", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" style="text-align: center; padding: 20px;">
+      <input type="file" id="upload" />
+      <div style="margin: 20px;">
+        <img id="preview" style="width: 100%; border: 1px solid lightgray" />
+      </div>
+      <div id="ipfsHash" style="padding: 20px 0px;"></div>
+      <a id="url" target="_blank" style="padding: 20px 0px;"></a>
+      <div
+        id="base64"
+        style="padding: 0 20px; word-break: break-all; font-size: 8px;"
+      ></div>
+    </div>
+    <div id="uploaded"></div>
+  </body>
+</html>

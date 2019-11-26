@@ -1,4 +1,5 @@
 var Web3 = require("web3");
+
 const init = async () => {
   /**
    * 1. MetaMask wallet injects a global variable called ethereum
@@ -11,6 +12,87 @@ const init = async () => {
     var web3 = new Web3(window.ethereum);
     var [account] = await web3.eth.getAccounts();
     document.getElementById("address").innerHTML = account;
+
+    var items;
+
+    document.getElementById("inputTextArea").oninput = () => {
+      items = document.getElementById("inputTextArea").value.split(",");
+
+      /* remove all child */
+      const myNode = document.getElementById("list");
+      while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+      }
+
+      /* append child */
+      for (let index = 0; index < items.length; index++) {
+        var node = document.createElement("li");
+        node.innerHTML = items[index];
+        document.getElementById("list").appendChild(node);
+      }
+    };
+    document.getElementById("submitButton").onclick = async () => {
+      var networkId = await web3.eth.net.getId();
+      var contractInfo = (await import("../build/contracts/RandPicker.json"))
+        .default;
+      var { abi, networks } = contractInfo;
+
+      if (networks[networkId]) {
+        var contract = new web3.eth.Contract(abi, networks[networkId].address);
+        var networkId = await web3.eth.net.getId();
+
+        var [account] = await web3.eth.getAccounts();
+
+        await contract.methods.newEntry(items).send({ from: account });
+
+        // const secondAddressEntryCount = await ;
+        var pickersCount = await contract.methods.pickersIndex(account).call();
+        let pickers = [];
+        for (let index = 1; index <= pickersCount; index++) {
+          let data = await contract.methods.getPicker(account, index).call();
+          pickers.push(data);
+        }
+
+        /* remove all child */
+        var myNode = document.getElementById("randPickerList");
+        while (myNode.firstChild) {
+          myNode.removeChild(myNode.firstChild);
+        }
+        console.log(pickers);
+
+        document.getElementById("randPickerList").innerHTML = pickers
+          .map(
+            picker => `
+            <br />
+            <ul>
+              <li>Words List</li>
+              <ul>
+                ${picker.words.reduce(
+                  (container, word) => container + "<li>" + word + "</li>",
+                  ""
+                )}
+              </ul>
+              <li>Result</li>
+              <ul>
+              ${
+                picker.picks
+                  ? "<li>" + "yet picked" + "</li>"
+                  : picker.picks.reduce(
+                      (container, word) => container + "<li>" + word + "</li>",
+                      ""
+                    )
+              }
+              </ul>
+              <li><button>Pick One</button></li>
+            </ul>
+        `
+          )
+          .reverse()
+          .join("");
+      } else {
+        console.log(`cannot find deployed contract on network ${networkId}`);
+      }
+    };
   } else {
     console.log("MetaMask Needed");
   }

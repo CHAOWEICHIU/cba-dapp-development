@@ -58,11 +58,10 @@ const init = async () => {
         while (myNode.firstChild) {
           myNode.removeChild(myNode.firstChild);
         }
-        console.log(pickers);
 
         document.getElementById("randPickerList").innerHTML = pickers
           .map(
-            picker => `
+            (picker, pickerIndex) => `
             <br />
             <ul>
               <li>Words List</li>
@@ -75,7 +74,7 @@ const init = async () => {
               <li>Result</li>
               <ul>
               ${
-                picker.picks
+                picker.picks.length === 0
                   ? "<li>" + "yet picked" + "</li>"
                   : picker.picks.reduce(
                       (container, word) => container + "<li>" + word + "</li>",
@@ -83,12 +82,27 @@ const init = async () => {
                     )
               }
               </ul>
-              <li><button>Pick One</button></li>
+              <li>
+                <button id="button_for_picker_${pickerIndex + 1}">
+                  Pick One
+                </button>
+              </li>
             </ul>
         `
           )
           .reverse()
           .join("");
+        for (let index = 0; index < pickers.length; index++) {
+          document.getElementById(
+            `button_for_picker_${index + 1}`
+          ).onclick = async () => {
+            await contract.methods
+              .pickOne(String(index + 1))
+              .send({ from: account });
+
+            // TODO Update UI after contract interaction
+          };
+        }
       } else {
         console.log(`cannot find deployed contract on network ${networkId}`);
       }

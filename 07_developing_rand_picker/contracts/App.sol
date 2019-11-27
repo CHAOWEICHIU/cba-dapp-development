@@ -60,9 +60,9 @@ contract RandPicker {
     function pickOne(uint index) public payable {
         require(msg.value >= pickOneFee);
         address caller = msg.sender;
-        uint randIndex = now % (pickers[caller][index].words.length + 1);
-        string memory winner = pickers[caller][index].words[randIndex];
-        pickers[caller][index].picks.push(winner);
+        uint randIndex = now % (pickers[caller][index].words.length);
+        string memory winingWord = pickers[caller][index].words[randIndex];
+        pickers[caller][index].picks.push(winingWord);
         pickers[caller][index].picksTimestamp.push(now);
     }
     

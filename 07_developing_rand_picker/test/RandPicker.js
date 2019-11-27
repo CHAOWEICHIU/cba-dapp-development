@@ -138,7 +138,7 @@ contract("App.sol", accounts => {
       try {
         await contractRandPicker.methods.pickOne(1).send({
           from: secondAccount,
-          value: web3.utils.toWei("0.99", "ether")
+          value: 1
         });
       } catch (error) {
         const errorCorrect = error.message.includes("revert");
@@ -147,18 +147,22 @@ contract("App.sol", accounts => {
     });
     it("able to pick one if enough fee being paid", async () => {
       const [, secondAccount] = await web3.eth.getAccounts();
-      Promise.all([
+      await Promise.all([
         contractRandPicker.methods
           .pickOne(1)
-          .send({ from: secondAccount, value: web3.utils.toWei("1", "ether") }),
+          .send({ from: secondAccount, value: 2 }),
         contractRandPicker.methods
           .pickOne(1)
-          .send({ from: secondAccount, value: web3.utils.toWei("1", "ether") })
+          .send({ from: secondAccount, value: 2 }),
+        contractRandPicker.methods
+          .pickOne(1)
+          .send({ from: secondAccount, value: 2 })
       ]);
       const data = await contractRandPicker.methods
         .getPicker(secondAccount, 1)
         .call();
-      assert.equal(data.words.length, "2");
+
+      assert.equal(data.picks.length, "3");
     });
   });
 });

@@ -131,4 +131,34 @@ contract("App.sol", accounts => {
       assert.deepEqual(secondEntry.words, ["c", "d"], "should match");
     });
   });
+
+  describe("pickOne(uint index) public payable {}", () => {
+    it("not able to pick one if not paying enough fee", async () => {
+      const [, secondAccount] = await web3.eth.getAccounts();
+      try {
+        await contractRandPicker.methods.pickOne(1).send({
+          from: secondAccount,
+          value: web3.utils.toWei("0.99", "ether")
+        });
+      } catch (error) {
+        const errorCorrect = error.message.includes("revert");
+        assert(errorCorrect, "Should revert");
+      }
+    });
+    it("able to pick one if enough fee being paid", async () => {
+      const [, secondAccount] = await web3.eth.getAccounts();
+      Promise.all([
+        contractRandPicker.methods
+          .pickOne(1)
+          .send({ from: secondAccount, value: web3.utils.toWei("1", "ether") }),
+        contractRandPicker.methods
+          .pickOne(1)
+          .send({ from: secondAccount, value: web3.utils.toWei("1", "ether") })
+      ]);
+      const data = await contractRandPicker.methods
+        .getPicker(secondAccount, 1)
+        .call();
+      assert.equal(data.words.length, "2");
+    });
+  });
 });

@@ -165,4 +165,7 @@ contract("App.sol", accounts => {
       assert.equal(data.picks.length, "3");
     });
   });
+  describe("getPicker", () => {
+    it("will push one more result to pickers");
+  });
 });

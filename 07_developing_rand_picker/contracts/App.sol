@@ -43,7 +43,6 @@ contract RandPicker {
     
     function namePurpose(uint index ,string memory purpose) public payable {
         address caller = msg.sender;
-        string memory defaultString;
         require(msg.value >= namePurposeFee);
         pickers[caller][index].purpose = purpose;
     }
